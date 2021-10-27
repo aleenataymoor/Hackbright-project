@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{%include 'header.html'%}
+
+{% block title %} HI {% endblock %}
+
+{% block body %} 
+
+    <h3>
+        THIS IS INDEX PAGE INHERITED FROM BASE
+    </h3>
+    <img src="/static/pets-3.jpg" alt="Pets main picture"  height="250" class='center'>
+    <br>
+    <br>
+    <br>
+
+    <h1 display: inline-block> Your Pet: {{dog_name_html}}</h1>
+    <h1><img src={{ dog_image_html}} width="300" height="300" class='center' id="profilepic"></h1>
+    <button type="button" class='center'>VIEW PROFILE</button>
+   
+
+
+{% endblock %}
