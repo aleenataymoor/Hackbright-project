@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %} 
+
+    <form action="/register" method="POST" class="center">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname"><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br>
+        <label for="password">Set Password:</label><br>
+        <input type="password" id="pswrd" name="password"><br>
+        <label for="password">Confirm Password:</label><br>
+        <input type="password" id="pswrd" name="password"><br><br>
+        <input type="submit" value="SIGN UP">
+    </form>
+
+    <script src="/static/eventhandling.js"></script>
+
+{% endblock %}

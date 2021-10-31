@@ -22,7 +22,7 @@ class User(db.Model):
     pets= db.relationship('Pet', back_populates="users")
 
     def __repr__(self):
-        return f"<User user_id={self.user_id} email={self.email}>"
+        return f"<User user_id={self.user_id} name={self.name}>"
 
 
 class Pet(db.Model):
@@ -52,8 +52,7 @@ class Appointment(db.Model):
     pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'), nullable=False)
     appointment_time_stamp = db.Column(db.DateTime, nullable= False)
     appointment_type= db.Column(db.String(15))
-    # rename this to send_reminder or something more descriptive
-    twilio= db.Column(db.Boolean)
+    send_reminder= db.Column(db.Boolean)
 
     pets= db.relationship('Pet', back_populates="appointments")
 
@@ -99,10 +98,9 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-connect_to_db(app)
-
+# connect_to_db(app)
 
 
 if __name__ == "__main__":

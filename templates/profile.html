@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %} 
+
+
+<h3 > Your Name:{{user.name}}</h3>
+<h3 > Your Pet:{{pet.pet_name}}</h3>
+<h3 > Pet Species:{{pet.species}}</h3>
+<img src={{ pet.pic_url}} width="300" height="300" id="petpic">
+
+<button type="button" id='reminder-button'>Send Reminder</button>
+
+
+
+
+{% endblock %}
