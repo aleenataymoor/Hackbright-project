@@ -3,8 +3,14 @@
 {% block title %} {% endblock %}
 
 {% block body %} 
-
-    <form action="/login" method="POST" class="center">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/verifyuser" method="POST" class="center">
         <label for="email">Email:</label><br>
         <input type="text" id="email" name="email"><br>
         <label for="password">Password:</label><br>

@@ -4,7 +4,13 @@
 {% block title %} HI {% endblock %}
 
 {% block body %} 
-
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
     
     <img src="/static/pets-3.jpg" alt="Pets main picture"  height="250" class='center'>
     <br>
@@ -16,7 +22,15 @@
    
     <form action="/profile">
         <input type="submit" value="View Profile" class="center">
-      </form>
+    </form><br>
+
+    <form action="/findsalon">
+      <input type="submit" value="Find Grooming Salons" class="center">
+    </form><br>
+
+    <form action="/findvet">
+      <input type="submit" value="Find Veterinary Clinics" class="center">
+    </form>
     
 
 {% endblock %}

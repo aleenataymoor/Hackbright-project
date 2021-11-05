@@ -1,14 +1,13 @@
 
 """Models for Pet Website."""
 #projectdb
-
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User( db.Model):
     """A user."""
 
     __tablename__ = "users"
@@ -84,9 +83,6 @@ class Schedule(db.Model):
 #     __tablename__ = "shoppings"
 #     product_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     
-    
-    
-
 
 
 
