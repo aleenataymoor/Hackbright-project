@@ -7,6 +7,11 @@ import os
 import crud
 from utils.sms import send_sample_sms
 import jinja2
+from g_maps_code import convert_lat_long, get_places_from_coordinates
+
+from flask_sqlalchemy import SQLAlchemy
+
+
 
 from jinja2 import StrictUndefined
 app = Flask(__name__)
@@ -14,6 +19,8 @@ app = Flask(__name__)
 
 app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 app.jinja_env.undefined = jinja2.StrictUndefined
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -64,21 +71,14 @@ def make_new_user():
     getcpassword = request.form.get('cpassword')
 
     user = User.query.filter_by(email=getemail).first() 
-    print('email', getemail)
-    print('name', getflname)
-    print('zip', getzpcode)
-    print('phone', getphone)
-    print('password', getpassword)
-
+   
     if user:
         flash("Email already exists. Try logging in ")
         return redirect('/login')
 
     else:
         if getpassword==getcpassword:
-            print('line70')
             new_user = crud.create_user(getflname, getemail, getpassword, getzpcode, getphone) 
-            print('new user', new_user)
             flash ("New account created ")
             return redirect('/login')
         else:
@@ -118,12 +118,40 @@ def show_profile():
                             user=getuser,
                             pet=getpet)
 
-# @app.route('/logout')
-# def log_out():
-#     session.pop("user", None)
-#     return redirect('/login')
+
+@app.route('/findvet', methods=['POST', 'GET'])
+def get_vet_map():
+   
+    searched_zipcode= request.form.get('zpsrch')
+    if is_logged_in():
+        if searched_zipcode === None:
+            user=session['user']
+            getuser= User.query.filter_by(user_id=user).first()
+            latitude_longitude=convert_lat_long(getuser.zipcode)
+        else:
+            latitude_longitude=convert_lat_long(searched_zipcode)
+        
+        get_places_from_coordinates(latitude_longitude) 
+
+        return render_template('vetclinic.html',
+                                coordinates=latitude_longitude)
+
+    
+
+@app.route('/findsalon', methods=['POST', 'GET'])
+def get_grooming_salon():
+
+    return render_template('groomsalon.html')
+
+
+@app.route('/logout', methods=['POST', 'GET'])
+def log_out():
+
+    if is_logged_in():
+        session.pop("user", None)
+        return redirect('/login')
 
 if __name__ == "__main__":
     app.debug = True
     connect_to_db(app)
-    app.run(debug=True,  host="0.0.0.0", port=4444)
+    app.run(debug=True,  host="0.0.0.0")

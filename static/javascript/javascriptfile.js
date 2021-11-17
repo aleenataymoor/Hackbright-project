@@ -1,5 +1,5 @@
 
-// "use strict";
+"use strict";
 
 
 // function sendReminderText(){
@@ -8,3 +8,5 @@
 // };
 
 
+
+    
