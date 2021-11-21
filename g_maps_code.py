@@ -1,4 +1,4 @@
-
+import gmaps
 import os
 import googlemaps
 import pandas as pd
@@ -57,4 +57,14 @@ def get_places_from_coordinates(latitude_longitude):
 
         result_list.extend(response.get('results'))
         next_page_token=response.get('next_page_token')
-        print(response)
+        places_dict={}
+        for a in response['results']:
+            place_id= a['place_id']
+            place_name=a['name']
+            place_lat= a['geometry']['location']['lat']
+            place_long= a['geometry']['location']['lng']
+            places_dict[place_id]={'lat':place_lat,'long':place_long, 'name':place_name}
+       
+    return places_dict
+
+        

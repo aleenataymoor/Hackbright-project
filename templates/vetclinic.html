@@ -5,23 +5,25 @@
 {% block body %} 
     {% include "navbar.html" %}
     <h2>VETERINARY CLINICS NEAR YOU</h2>
-    <form action="/findvet" method="POST" class="center">
         <label for="zpsrch">Looking for vets in another area? enter the zipcode here:</label>
         <input type="text" id="zpsrch" name="zpsrch">
-        <input type="submit" value="search">
-    </form>
+        <input type="button" value="search" id="search_btn">
+        <br>
+        <br>
+        <br>
 
-    
-        <iframe
-        width="600"
-        height="450"
-        style="border:0"
-        loading="lazy"
-        allowfullscreen
-        src="https://www.google.com/maps/embed/v1/place?key=API_KEY-dE
-            &q={{coordinates[0]}},{{coordinates[1]}}">
-        </iframe>
-        <script src="../static/javascript/javascriptfile.js"></script>
+    <main>
+        <section class="map">
+          <div id="map" style="height: 600px;width: 600px;" class="center">
+            <script src="../static/javascript/javascriptfile.js"></script>
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
+        </script>
+          </div>
+        </section>
+    </main>
+        
+       
 {% endblock %}
 
 

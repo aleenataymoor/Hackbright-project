@@ -8,7 +8,7 @@ import crud
 from utils.sms import send_sample_sms
 import jinja2
 from g_maps_code import convert_lat_long, get_places_from_coordinates
-
+import json
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -122,21 +122,39 @@ def show_profile():
 @app.route('/findvet', methods=['POST', 'GET'])
 def get_vet_map():
    
-    searched_zipcode= request.form.get('zpsrch')
     if is_logged_in():
-        if searched_zipcode === None:
-            user=session['user']
-            getuser= User.query.filter_by(user_id=user).first()
-            latitude_longitude=convert_lat_long(getuser.zipcode)
-        else:
-            latitude_longitude=convert_lat_long(searched_zipcode)
-        
-        get_places_from_coordinates(latitude_longitude) 
+        user=session['user']
+        getuser= User.query.filter_by(user_id=user).first()
+        lat_long_user=convert_lat_long(getuser.zipcode)
+        places= get_places_from_coordinates(lat_long_user) 
+        print()
+        print()
+         
+    return render_template('vetclinic.html')
 
-        return render_template('vetclinic.html',
-                                coordinates=latitude_longitude)
+@app.route('/jsonifycoordinates', methods=['POST', 'GET'])
+def jsonify_coordinates():
+    searched_zipcode= request.args.get('zpsrch')
+    print(searched_zipcode)
+    if searched_zipcode == None or searched_zipcode == "":
 
-    
+        user=session['user']
+        getuser= User.query.filter_by(user_id=user).first()
+        print(getuser)
+        lat_long_user=convert_lat_long(getuser.zipcode)
+        print (lat_long_user)
+        places= get_places_from_coordinates(lat_long_user)
+        json_places=json.dumps(places)
+        print (json_places)
+        return json_places
+
+    else:
+        print("Searching for "+searched_zipcode)
+        lat_long_searched=convert_lat_long(searched_zipcode)
+        places= get_places_from_coordinates(lat_long_searched)
+        json_places=json.dumps(places)
+        return json_places
+   
 
 @app.route('/findsalon', methods=['POST', 'GET'])
 def get_grooming_salon():
@@ -154,4 +172,4 @@ def log_out():
 if __name__ == "__main__":
     app.debug = True
     connect_to_db(app)
-    app.run(debug=True,  host="0.0.0.0")
+    app.run(debug=True,  host="0.0.0.0", port="5500")
