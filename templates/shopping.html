@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %} 
+
+    {% include "navbar.html" %}
+
+        
+    
+    <h2>PET PRODUCTS</h2>
+
+    <div id="prodlist" class="row">
+        {% for key, values in product_dict.items()%}
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4  mt-3">
+
+              <div class="card text-center bg-light">
+                
+                    <img class="card-img-top img-circle" src={{product_dict[key][5]}} >
+                
+                <div class="card-body">
+                    <h5 class="card-title">  {{product_dict[key][2]}} </h5>
+                    <div class="price card-text">${{product_dict[key][6]}}</div>
+                    <a class="btn btn-primary" href="/productpage/{{key}}">Details</a>
+                </div>
+              </div>
+          </div>
+      {% endfor %}
+    </div>
+      
+      
+   
+    
+
+
+
+
+{% endblock %}

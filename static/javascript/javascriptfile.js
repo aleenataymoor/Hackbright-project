@@ -11,11 +11,6 @@ function showMap() {
 
 
 
-function initMap2(){
-
-}
-
-
 function initMap() {
     console.log('running')
     const postalCode = document.getElementById('zpsrch').value

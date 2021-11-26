@@ -122,14 +122,6 @@ def show_profile():
 @app.route('/findvet', methods=['POST', 'GET'])
 def get_vet_map():
    
-    if is_logged_in():
-        user=session['user']
-        getuser= User.query.filter_by(user_id=user).first()
-        lat_long_user=convert_lat_long(getuser.zipcode)
-        places= get_places_from_coordinates(lat_long_user) 
-        print()
-        print()
-         
     return render_template('vetclinic.html')
 
 @app.route('/jsonifycoordinates', methods=['POST', 'GET'])
@@ -161,15 +153,89 @@ def get_grooming_salon():
 
     return render_template('groomsalon.html')
 
+@app.route('/shopping', methods=['POST', 'GET'])
+def shop_for_pets():
+        product_dict=fetch_products()
+        
+        return render_template('shopping.html',
+                            product_dict=product_dict)
+
+
+def fetch_products():
+    product_dict={}
+    with open("petproducts.txt", "r") as file:
+        for line in file:
+            product_id, product_type, name, weight, description,url,price = line.strip().split("|")
+            product_dict[product_id]=[product_id, product_type, name, weight, description,url,price]
+    return product_dict
+
+
+@app.route('/productpage/<product_key>', methods=['POST', 'GET'])
+def get_product_page(product_key):
+    product_dict=fetch_products()
+    specs_list=product_dict[product_key]
+
+
+    return render_template('productpage.html',
+                            specs=specs_list)
+
+
+@app.route("/add_to_cart/<prod_id>")
+def add_to_cart(prod_id):
+    """Add a product to cart and redirect to shopping cart page.."""
+
+    if 'cart' in session:
+        cart = session['cart']
+    else:
+        cart = session['cart'] = {}
+
+    product_dict=fetch_products()
+    product_id=product_dict[prod_id][0]
+
+    cart[product_id] = cart.get(prod_id, 0) + 1
+
+    
+    flash("Product successfully added to cart.")
+
+    return redirect("/cart")
+
+
+@app.route("/cart")
+def show_shopping_cart():
+    """Display content of shopping cart."""
+    product_dict= fetch_products()
+    order_total = float(0)
+    final_dict={}
+    cart = session.get("cart", {})
+  
+    for prod_id, quantity in cart.items():
+        product = product_dict[prod_id]
+    
+        total_cost = quantity * float(product[6])
+        prod_type=product[1]
+        name=product[2]
+        url=product[5]
+        price=product[6]
+        order_total += total_cost
+
+  
+        final_dict[prod_id]=[prod_type,name,url,price,total_cost,quantity]
+   
+    return render_template("cart.html",
+                            cart=cart,
+                            order_total=order_total,
+                            final_dict=final_dict
+                            )
+
 
 @app.route('/logout', methods=['POST', 'GET'])
 def log_out():
 
     if is_logged_in():
         session.pop("user", None)
+        session.pop("cart",None)
         return redirect('/login')
 
 if __name__ == "__main__":
-    app.debug = True
     connect_to_db(app)
-    app.run(debug=True,  host="0.0.0.0", port="5500")
+    app.run(debug=False , host="0.0.0.0", port="5500")

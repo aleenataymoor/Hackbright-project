@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %} 
+
+
+    {% include "navbar.html" %}
+    <!-- Show flashed messages -->
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+    
+    <table class="table table-striped mt-3">
+        <thead>
+        <tr>
+            <th>Product name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+    
+        {% for prod_id, quantity in cart.items()%}
+            <tr>
+                <td>{{final_dict[prod_id][1]}}</td>
+                <td>{{quantity}}</td>
+                <td>${{final_dict[prod_id][3]}}</td>   
+                <td>${{final_dict[prod_id][4]}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Total: ${{order_total}}</h3>
+
+    <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
+
+
+
+
+
+{% endblock %}
