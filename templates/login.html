@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} {% endblock %}
+
+{% block html_head %}
+    <link rel="stylesheet" href="/static/login.css">
+{% endblock %}
+  
+  
+{% block title %}  {% endblock %}
 
 {% block body %} 
     {% with messages = get_flashed_messages() %}
@@ -10,14 +16,18 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <form action="/verifyuser" method="POST" class="center">
-        <label for="email">Email:</label><br>
-        <input type="text" id="email" name="email"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="pswrd" name="password"><br>
-        <input type="submit" value="LOGIN">
-    </form>
-    <h4>Not registered? <a href = "http://localhost:5000/register">Register now</a></h4>
+    <div class="loginform">
+        <form action="/verifyuser" method="POST" class="center" >
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="pswrd" name="password"><br><br><br>
+            
+            <input type="submit" value="LOGIN"><br><br>
+            <h4>Not registered? <a href = "http://localhost:5000/register">Register now</a></h4>
+        </form>
+    </div>
+    
 
     <script src="/static/eventhandling.js"></script>
 

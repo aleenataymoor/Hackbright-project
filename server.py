@@ -34,8 +34,7 @@ def verify_user():
     password_user=request.form.get('password')
 
     user=User.query.filter((User.email== email_user) & (User.password == password_user)).first()
-    print(email_user)
-    print(password_user)
+
 
     if user:
         flash("Logged In!")
@@ -153,13 +152,6 @@ def get_grooming_salon():
 
     return render_template('groomsalon.html')
 
-@app.route('/shopping', methods=['POST', 'GET'])
-def shop_for_pets():
-        product_dict=fetch_products()
-        
-        return render_template('shopping.html',
-                            product_dict=product_dict)
-
 
 def fetch_products():
     product_dict={}
@@ -169,11 +161,46 @@ def fetch_products():
             product_dict[product_id]=[product_id, product_type, name, weight, description,url,price]
     return product_dict
 
+@app.route('/shopping', methods=['POST', 'GET'])
+def shop_for_pets():
+    product_dict=fetch_products()
+    type_set=set()
+    prices=[]
+    for key,values in product_dict.items():
+        type_set.add(values[1])
+        prices.append(float(values[6]))  
+
+    print(product_dict)     
+    return render_template('shopping.html',
+                        product_dict=product_dict,
+                        type_set=type_set,
+                        max_price=max(prices),
+                        min_price=min(prices))
+
+
+# @app.route('/filterproducts', methods=['POST', 'GET'])
+# def filter_products():
+#     product_dict=fetch_products()
+#     filter_type=request.form.get("filteroption")
+#     filtered_products=[]
+#     for key,values in product_dict.items():
+#         if values[1]==filter_type:
+#             filtered_products.append(values)
+#     print (filtered_products)
+
+    
+
+
+    # return render_template('shopping.html',
+    #                         filtered_list=filtered_products)
+
+
 
 @app.route('/productpage/<product_key>', methods=['POST', 'GET'])
 def get_product_page(product_key):
     product_dict=fetch_products()
     specs_list=product_dict[product_key]
+    
 
 
     return render_template('productpage.html',
@@ -238,4 +265,4 @@ def log_out():
 
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(debug=False , host="0.0.0.0", port="5500")
+    app.run(debug=False , host="0.0.0.0", port="4400")

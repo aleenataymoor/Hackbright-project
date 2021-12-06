@@ -4,6 +4,7 @@
 {% block title %} HI {% endblock %}
 
 {% block body %} 
+<div class="container"></div>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
@@ -12,10 +13,7 @@
     {% endif %}
   {% endwith %}
     {% include "navbar.html" %}
-    <img src="/static/pets-3.jpg" alt="Pets main picture"  height="250" class='center'>
-    <br>
-    <br>
-    <br>
+    
 
     <h1 display: inline-block> Your Pet: {{pet.pet_name}}</h1>
     <h1><img src={{ pet.pic_url}} width="300" height="300" class='center' id="profilepic"></h1>
@@ -32,9 +30,12 @@
       <input type="submit" value="Find Veterinary Clinics" class="center">
     </form>
 
-    <form action="/shopping">
-      <input type="submit" value="shopping" class="center">
-    </form>
+    <div id="shoppingtab">
+      <img src="../static/dry-petfood-kibbles_tcm11-65881.jpg" alt="shopping-bg"  height="350" width=100%>
+      <form action="/shopping">
+        <input type="submit" value="shopping" class="center">
+      </form>
+    </div>
     
-
+  </div>
 {% endblock %}
