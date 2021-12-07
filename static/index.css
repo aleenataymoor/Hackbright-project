@@ -1,0 +1,31 @@
+body {
+    background-color:grey;
+    font-family: Helvetica, sans-serif;
+    font-size: 22px;
+    color: seashell;
+    opacity: 0.9;
+}
+
+user agent stylesheet
+body {
+    display: block;
+    margin: 8px;
+}
+
+#shoppingphoto{
+    display:flex;
+    justify-content:center;
+    
+
+}
+
+#shoppy{
+    background-image: url("https://media.gettyimages.com/videos/soft-white-background-video-id1132439239?s=640x640");
+    width:100%;
+    height:100%;
+}
+
+.indexheadings{
+    font-family: 'Lucida Sans', sans-serif;
+    font-weight: 400;
+}

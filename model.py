@@ -74,7 +74,23 @@ class Schedule(db.Model):
     def __repr__(self):
         return f"<Schedule schedule_id={self.schedule_id} meal_schedule={self.meal_schedule} medicine_schedule={self.medicine_schedule}>"
 
+class ScheduledReminder(db.Model):
+    __tablename__ = 'reminder'
 
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    phone_number = db.Column(db.String(50), nullable=False)
+    delta = db.Column(db.Integer, nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
+    timezone = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return '<Reminder %r>' % self.name
+
+    def get_notification_time(self):
+        appointment_time = arrow.get(self.time)
+        reminder_time = appointment_time.shift(minutes=-self.delta)
+        return reminder_time
 
 
 # class Shopping(db.Model):

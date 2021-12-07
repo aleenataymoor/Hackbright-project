@@ -10,8 +10,8 @@ import jinja2
 from g_maps_code import convert_lat_long, get_places_from_coordinates
 import json
 from flask_sqlalchemy import SQLAlchemy
-
-
+from celery import Celery
+import arrow
 
 from jinja2 import StrictUndefined
 app = Flask(__name__)
@@ -120,7 +120,6 @@ def show_profile():
 
 @app.route('/findvet', methods=['POST', 'GET'])
 def get_vet_map():
-   
     return render_template('vetclinic.html')
 
 @app.route('/jsonifycoordinates', methods=['POST', 'GET'])
@@ -146,11 +145,6 @@ def jsonify_coordinates():
         json_places=json.dumps(places)
         return json_places
    
-
-@app.route('/findsalon', methods=['POST', 'GET'])
-def get_grooming_salon():
-
-    return render_template('groomsalon.html')
 
 
 def fetch_products():
@@ -226,6 +220,29 @@ def add_to_cart(prod_id):
 
     return redirect("/cart")
 
+@app.route("/createVetAppt")
+def create_vet_appointment():
+    """Display content of shopping cart."""
+    appt_time = request.form.get("appt_time") 
+    print(appt_time)
+
+    appt = ScheduledReminder(
+                name="Vet Reminder",
+                phone_number="15108945182",
+                delta=0,
+                time=appt_time,
+                timezone="pst",
+            )
+
+            appt.time = arrow.get(appt.time, appt.timezone).to('utc').naive
+
+            db.session.add(appt)
+            db.session.commit()
+            send_sms_reminder.apply_async(
+                args=[appt.id], eta=appt.get_notification_time()
+            )
+
+    return redirect("/cart")
 
 @app.route("/cart")
 def show_shopping_cart():
@@ -262,6 +279,47 @@ def log_out():
         session.pop("user", None)
         session.pop("cart",None)
         return redirect('/login')
+
+def celery(self):
+        celery = Celery(
+            app.import_name, broker=app.config['CELERY_BROKER_URL']
+        )
+        celery.conf.update(self.flask_app.config)
+
+        TaskBase = celery.Task
+
+        class ContextTask(TaskBase):
+            abstract = True
+
+            def __call__(self, *args, **kwargs):
+                with app.app_context():
+                    return TaskBase.__call__(self, *args, **kwargs)
+
+        celery.Task = ContextTask
+
+        return celery
+
+class ContextTask(celery.Task):
+    def __call__(self, *args, **kwargs):
+        with app.app_context():
+            return self.run(*args, **kwargs)
+
+
+celery.Task = ContextTask
+
+@celery.task()
+def send_sms_reminder(appointment_id):
+    try:
+        appointment = db.session.query(Appointment).filter_by(id=appointment_id).one()
+    except NoResultFound:
+        return
+
+    time = arrow.get(appointment.time).to(appointment.timezone)
+    body = "Hello {0}. You have an appointment at {1}!".format(
+        appointment.name, time.format('h:mm a')
+    )
+
+    send_sample_sms_with_body(body)
 
 if __name__ == "__main__":
     connect_to_db(app)

@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {%include 'header.html'%}
 
+{% block html_head %}
+    <link rel="stylesheet" href="/static/index.css">
+{% endblock %}
+  
+
 {% block title %} HI {% endblock %}
 
 {% block body %} 
-<div class="container"></div>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
@@ -13,29 +17,58 @@
     {% endif %}
   {% endwith %}
     {% include "navbar.html" %}
-    
 
-    <h1 display: inline-block> Your Pet: {{pet.pet_name}}</h1>
-    <h1><img src={{ pet.pic_url}} width="300" height="300" class='center' id="profilepic"></h1>
    
-    <form action="/profile">
-        <input type="submit" value="View Profile" class="center">
-    </form><br>
-
-    <form action="/findsalon">
-      <input type="submit" value="Find Grooming Salons" class="center">
-    </form><br>
-
-    <form action="/findvet">
-      <input type="submit" value="Find Veterinary Clinics" class="center">
-    </form>
-
-    <div id="shoppingtab">
-      <img src="../static/dry-petfood-kibbles_tcm11-65881.jpg" alt="shopping-bg"  height="350" width=100%>
-      <form action="/shopping">
-        <input type="submit" value="shopping" class="center">
-      </form>
-    </div>
+      <div class="container-fluid">
     
-  </div>
+        <div class="row">
+          <div class="col-3">
+            <h1 display: inline-block> Your Pet: {{pet.pet_name}}</h1>
+            <h1><img src={{ pet.pic_url}} width="300" height="300" class='center' id="profilepic"></h1>
+          
+            <form action="/profile">
+                <input type="submit" value="View Profile" class="center">
+            </form><br>
+          </div>
+          <div class="col-9">
+            <!-- LARGER COLUMN -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <form action="/findvet">
+              <input type="submit" value="Find Veterinary Clinics" class="center">
+            </form>
+          </div>
+        </div>
+         
+        <div class="row">
+          <div class="col-7" id="shoppingphoto float-left">
+            <img src="https://www.petfoodinstitute.org/wp-content/uploads/shutterstock_601451084-scaled.jpg" alt="Pet food picture" width="900" height="500">
+          
+          
+          </div>
+          <div class="col-5" float-left="">
+              <form action="/shopping" id="shoppy">
+                <input type="submit" value="shopping" class="center">
+              </form>
+            
+          </div>
+          
+        </div>
+        
+    
+      </div>
+    
+    
+
+    
+
+
+    
+
+    
+
 {% endblock %}
+
+

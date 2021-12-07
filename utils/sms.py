@@ -23,3 +23,13 @@ def send_sample_sms():
                  )
 
     print(message.sid)
+
+def send_sample_sms_with_body(body_text):
+    message = client.messages \
+                .create(
+                     body=body_text,
+                     from_=SENDER_PHONE,
+                     to=TEST_RECEIVER_PHONE
+                 )
+
+    print(message.sid)
