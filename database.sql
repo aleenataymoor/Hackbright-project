@@ -61,3 +61,13 @@ INSERT INTO schedules (pet_id)  VALUES (1);
 INSERT INTO schedules (pet_id) VALUES (2);
 INSERT INTO schedules (pet_id) VALUES (3);
 INSERT INTO schedules (pet_id) VALUES (4);
+
+CREATE TABLE reminders (
+
+  id SERIAL PRIMARY KEY,
+  name varchar(50),
+  phone_number varchar(50),
+  delta INTEGER,
+  time timestamp,
+  timezone varchar(50)
+);

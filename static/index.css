@@ -1,16 +1,29 @@
 body {
-    background-color:grey;
     font-family: Helvetica, sans-serif;
     font-size: 22px;
-    color: seashell;
+    color:seashell;
     opacity: 0.9;
+    background-color: black;
 }
 
-user agent stylesheet
-body {
-    display: block;
-    margin: 8px;
+html, body{
+    margin:0;
+    padding:0;
+
 }
+
+.banner{
+    background-image: url("https://c4.wallpaperflare.com/wallpaper/772/373/311/dog-animals-photography-wallpaper-preview.jpg" );
+    margin:40px auto auto auto;
+    padding-top:85px;
+    height:500px;
+    max-width:1200px;
+    background-position :center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
 
 #shoppingphoto{
     display:flex;
@@ -19,13 +32,42 @@ body {
 
 }
 
-#shoppy{
-    background-image: url("https://media.gettyimages.com/videos/soft-white-background-video-id1132439239?s=640x640");
-    width:100%;
-    height:100%;
-}
-
 .indexheadings{
+
     font-family: 'Lucida Sans', sans-serif;
     font-weight: 400;
+
+}
+
+.selection{
+
+    margin-top: 300px;
+    margin: 20px;
+    padding:20px;
+    margin-bottom:auto;
+    height:300px;
+    flex-basis:30%;
+    box-sizing:border-box;
+    opacity:1;
+    border-style: double;
+    border-width: 2px;
+    border-color: black;
+
+}
+
+.petpic{
+   
+    background-size: cover;
+}
+
+.vetpic{
+    background-image: url("https://snazzy-maps-cdn.azureedge.net/assets/8097-wy.png?v=20170626083314");
+}
+
+.shoppic{
+    background-image: url("https://media.istockphoto.com/photos/dry-pet-food-picture-id1131841641?k=20&m=1131841641&s=612x612&w=0&h=T4YEBAocjxLg0Abl_an1pYbM5zyUFuXHTbNRVF4Czag=");
+}
+
+#option-container{
+    margin-top: 250px;
 }

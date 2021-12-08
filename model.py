@@ -4,6 +4,7 @@
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import arrow
 
 db = SQLAlchemy()
 
@@ -75,7 +76,7 @@ class Schedule(db.Model):
         return f"<Schedule schedule_id={self.schedule_id} meal_schedule={self.meal_schedule} medicine_schedule={self.medicine_schedule}>"
 
 class ScheduledReminder(db.Model):
-    __tablename__ = 'reminder'
+    __tablename__ = 'reminders'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)

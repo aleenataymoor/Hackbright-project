@@ -1,4 +1,6 @@
-
+h1{
+    font-weight: 600;
+}
 
 
 .center {
@@ -23,7 +25,30 @@
     border: 5px solid #555;
   }
 
+.headermain{
+    background-image: url("https://c4.wallpaperflare.com/wallpaper/772/373/311/dog-animals-photography-wallpaper-preview.jpg");
+    background-size: cover;
+}
 
+.navbar{
+
+
+}
+
+.navbar ul {
+    margin:0;
+}
+
+.navbar li {
+    display: inline;
+}
+
+.navbar a{
+    padding:0.5em;
+    color: white;
+    display: inline-block;
+    text-decoration: none ;
+}
 
 
 	

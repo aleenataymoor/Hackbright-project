@@ -1,6 +1,8 @@
 import os
 import json
 from twilio.rest import Client
+import arrow
+
 #  Make sure that you type “source secrets.sh “
 #  into the command line or source whatever file you kept all your tokens, etc. in
 
@@ -24,12 +26,12 @@ def send_sample_sms():
 
     print(message.sid)
 
-def send_sample_sms_with_body(body_text):
+def send_sample_sms_with_body(body_text, phone):
     message = client.messages \
                 .create(
                      body=body_text,
                      from_=SENDER_PHONE,
-                     to=TEST_RECEIVER_PHONE
+                     to=phone
                  )
 
     print(message.sid)

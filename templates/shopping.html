@@ -6,6 +6,7 @@
 
     {% include "navbar.html" %}
 
+    
         
     
     <h2>PET PRODUCTS</h2>
@@ -21,17 +22,25 @@
             <div>
             {% for types in type_set%}
 
-                <input type="checkbox" id="filteroption" name="filter" value="filter">
+                <input type="checkbox" id="filteroption" name="filter" value="{{types}}">
                 <label for="filteroption"> {{types}}</label><br>
             {% endfor %}
             </div><br>
-            <input type="submit" value="FILTER">
+            <input type="submit" value="filter">
+        </form>
+    </div>
+    <div>
+        <form action="/clearfilter" method="POST">
+            
+            <input type="submit" value="Clear Filter">
         </form>
     </div>
 
+    
+
     <div id="prodlist" class="row">
         {% for key, values in product_dict.items()%}
-          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4  mt-3">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4  mt-3 {{product_dict[key][1]}}">
 
               <div class="card text-center bg-light">
                 

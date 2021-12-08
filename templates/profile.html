@@ -1,36 +1,55 @@
 {% extends 'base.html' %}
 
+{% block html_head %}
+    <link rel="stylesheet" href="/static/profile.css">
+{% endblock %}
+
 {% block title %} {% endblock %}
 
 {% block body %} 
 
     {% include "navbar.html" %}
-    <h3 > Your Name:{{user.name}}</h3>
-    <h3 > Your Pet:{{pet.pet_name}}</h3>
-    <h3 > Pet Species:{{pet.species}}</h3>
-    <img src={{ pet.pic_url}} width="300" height="300" id="petpic">
 
-    <form method="POST">
-        <h3>Set Veterinary Appointment Reminder</h3>
-        <label for="vet_appt">{{pet.pet_name}}'s next veterinary appointment:</label>
-        <input id="vet_appt" type="datetime-local" name="vetdate" min="" max="2030-06-30T16:30"><br>
-        <input type="radio" id="yes" name="reminder-option-yes" value="yes">
-        <label for="yes">Yes</label><br>
-        <input type="radio" id="no" name="reminder-option-no" value="no">
-        <label for="no">No</label><br>
-        <button type="submit" id='reminder-button'>Set Reminder</button>  
-    </form>
+    <div class="container">
 
-    <form method="POST">
-        <h3>Set Grooming Appointment Reminder</h3>
-        <label for="groom_appt">{{pet.pet_name}}'s next grooming appointment:</label>
-        <input id="groom_appt" type="datetime-local" name="groomdate" min="" max="2030-06-30T16:30"><br>
-        <input type="radio" id="yes" name="reminder-option-yes" value="yes">
-        <label for="yes">Yes</label><br>
-        <input type="radio" id="no" name="reminder-option-no" value="no">
-        <label for="no">No</label><br>
-        <button type="submit" id='reminder-button'>Set Reminder</button>  
-    </form>
+        <div class="row">
+            <div class="col-3 box picture" style="background-image: url('{{ pet.pic_url}}');" >
+                
+            </div>
+            <div class="col-6">
+                <div class="row box horizontal">
+                    <div class="col-12">
+                        <h3 > Your Name:{{user.name}}</h3>
+                        <h3 > Your Pet:{{pet.pet_name}}</h3>
+                        <h3 > Pet Species:{{pet.species}}</h3>
+                    </div>
+                </div>
+                <div class="row box horizontal">
+                    <div class="col-12">
+                        <form action="/createVetAppt" method="POST">
+                            <h3>Set Veterinary Appointment Reminder</h3>
+                            <label for="vet_appt">{{pet.pet_name}}'s next veterinary appointment:</label>
+                            <input id="vet_appt" type="datetime-local" name="vetdate" min="" max="2030-06-30T16:30"><br>
+                            <input type="radio" id="yes" name="reminder-option-yes" value="yes">
+                            <label for="yes">Yes</label><br>
+                            <input type="radio" id="no" name="reminder-option-no" value="no">
+                            <label for="no">No</label><br>
+                            <button type="submit" id='reminder-button'>Set Reminder</button>  
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+
+    
+    
+    
+
+    
+
 
 
 

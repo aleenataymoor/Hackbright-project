@@ -5,22 +5,16 @@ from model import *
 from crud import *
 import os
 import crud
-from utils.sms import send_sample_sms
 import jinja2
 from g_maps_code import convert_lat_long, get_places_from_coordinates
 import json
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery
 import arrow
-
+from datetime import datetime
+from tasks import send_sms_reminder
 from jinja2 import StrictUndefined
-app = Flask(__name__)
-
-
-app.secret_key = os.environ.get('FLASK_SECRET_KEY')
-app.jinja_env.undefined = jinja2.StrictUndefined
-
-
+from app_init import *
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -106,7 +100,6 @@ def Index():
 @app.route('/profile')
 def show_profile(): 
     if is_logged_in():
-        # send_sample_sms()
         user=session['user']
         print(user)
         getuser= User.query.filter_by(user_id=user).first()
@@ -155,38 +148,53 @@ def fetch_products():
             product_dict[product_id]=[product_id, product_type, name, weight, description,url,price]
     return product_dict
 
+    
+
 @app.route('/shopping', methods=['POST', 'GET'])
 def shop_for_pets():
     product_dict=fetch_products()
     type_set=set()
-    prices=[]
     for key,values in product_dict.items():
         type_set.add(values[1])
-        prices.append(float(values[6]))  
-
-    print(product_dict)     
+    
     return render_template('shopping.html',
                         product_dict=product_dict,
-                        type_set=type_set,
-                        max_price=max(prices),
-                        min_price=min(prices))
+                        type_set=type_set)
 
 
-# @app.route('/filterproducts', methods=['POST', 'GET'])
-# def filter_products():
-#     product_dict=fetch_products()
-#     filter_type=request.form.get("filteroption")
-#     filtered_products=[]
-#     for key,values in product_dict.items():
-#         if values[1]==filter_type:
-#             filtered_products.append(values)
-#     print (filtered_products)
+@app.route('/filterproducts', methods=['POST', 'GET'])
+def filter_products():
+    all_prod_dict=fetch_products()
+    if request.method == 'POST':
+        filter_types=request.form.getlist('filter')
+    print(filter_types)
+    filtered_products={}
+    type_set=set()
+    for key,values in all_prod_dict.items():
+        type_set.add(values[1])
+        for filter_type in filter_types:
+            if values[1]==filter_type:
+                filtered_products[key]=values
+        
+    return render_template('shopping.html',
+                            product_dict=filtered_products,
+                            type_set=type_set)
+
+@app.route('/clearfilter', methods=['POST', 'GET'])
+def clear_filter():
+    product_dict=fetch_products()
+    type_set=set()
+    for key,values in product_dict.items():
+        type_set.add(values[1])
+    
+    return render_template('shopping.html',
+                        product_dict=product_dict,
+                        type_set=type_set)
 
     
 
 
-    # return render_template('shopping.html',
-    #                         filtered_list=filtered_products)
+    
 
 
 
@@ -220,27 +228,24 @@ def add_to_cart(prod_id):
 
     return redirect("/cart")
 
-@app.route("/createVetAppt")
+@app.route("/createVetAppt", methods=['POST', 'GET'])
 def create_vet_appointment():
-    """Display content of shopping cart."""
-    appt_time = request.form.get("appt_time") 
-    print(appt_time)
-
+    appt_time = request.form.get("vetdate") 
     appt = ScheduledReminder(
                 name="Vet Reminder",
-                phone_number="15108945182",
+                phone_number="+15103998740",
                 delta=0,
                 time=appt_time,
-                timezone="pst",
+                timezone="utc",
             )
 
-            appt.time = arrow.get(appt.time, appt.timezone).to('utc').naive
-
-            db.session.add(appt)
-            db.session.commit()
-            send_sms_reminder.apply_async(
-                args=[appt.id], eta=appt.get_notification_time()
-            )
+    appt.time = arrow.get(appt_time).to('utc').naive
+    print(appt.time)
+    db.session.add(appt)
+    db.session.commit()
+    send_sms_reminder.apply_async(
+        args=[appt.id], eta=appt.get_notification_time()
+    )
 
     return redirect("/cart")
 
@@ -280,47 +285,6 @@ def log_out():
         session.pop("cart",None)
         return redirect('/login')
 
-def celery(self):
-        celery = Celery(
-            app.import_name, broker=app.config['CELERY_BROKER_URL']
-        )
-        celery.conf.update(self.flask_app.config)
-
-        TaskBase = celery.Task
-
-        class ContextTask(TaskBase):
-            abstract = True
-
-            def __call__(self, *args, **kwargs):
-                with app.app_context():
-                    return TaskBase.__call__(self, *args, **kwargs)
-
-        celery.Task = ContextTask
-
-        return celery
-
-class ContextTask(celery.Task):
-    def __call__(self, *args, **kwargs):
-        with app.app_context():
-            return self.run(*args, **kwargs)
-
-
-celery.Task = ContextTask
-
-@celery.task()
-def send_sms_reminder(appointment_id):
-    try:
-        appointment = db.session.query(Appointment).filter_by(id=appointment_id).one()
-    except NoResultFound:
-        return
-
-    time = arrow.get(appointment.time).to(appointment.timezone)
-    body = "Hello {0}. You have an appointment at {1}!".format(
-        appointment.name, time.format('h:mm a')
-    )
-
-    send_sample_sms_with_body(body)
-
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(debug=False , host="0.0.0.0", port="4400")
+    run_app()
