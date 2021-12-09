@@ -1,10 +1,23 @@
 
 body{
-    background-image: url(https://www.flytap.com/-/media/Flytap/new-tap-pages/travelling-with-animals/pets/flying-with-pets-og-image-1200x630.jpg);
+    background-image: url(https://cdn.pixabay.com/photo/2016/03/27/21/16/pet-1284307_960_720.jpg);
     background-repeat: no-repeat;
-    background-size: 80%;
-    background-color: rgb(254,220,86);
+    background-size: 100%;
+    
+
 }
+
+h1{
+
+}
+#heading{
+
+    position: absolute;
+    top:10%;
+    left:10%;
+    padding: 50px 35px;
+}
+
 
 .loginform{
     height: 350px;
@@ -12,8 +25,8 @@ body{
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 50%;
-    left: 80%;
+    top: 60%;
+    right: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
