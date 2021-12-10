@@ -1,0 +1,71 @@
+[33mcommit ee740067ffea869ff0e4662583622da8a85392eb[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Thu Dec 9 06:16:47 2021 +0000
+
+    Styled login and shopping page
+
+[33mcommit 029dd58b82c8401932f15626b8231d82385ab37f[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Thu Dec 9 00:49:02 2021 +0000
+
+    Adding Redis to gitignore
+
+[33mcommit bed1201bdc594c14a75f9ee73545d9a91802f8f0[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Thu Dec 9 00:45:30 2021 +0000
+
+    removing Redis
+
+[33mcommit 07d8b88af5db1d0310d8778f3d26cd3424f4b7fa[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Wed Dec 8 22:39:54 2021 +0000
+
+    minor updates
+
+[33mcommit b231fc73c0b99e7f78e56c7904c92a10205abcff[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Tue Dec 7 07:37:59 2021 +0000
+
+    styling changes
+
+[33mcommit 6d2cd4e8125b0927aa400e057b8def8c2ab99de3[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Mon Dec 6 05:21:16 2021 +0000
+
+    Styling Started
+
+[33mcommit 6de97175d7c125bf0d657d3e6ff2dcb4b2e57e4a[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Fri Nov 26 12:04:58 2021 +0000
+
+    Shopping section and cart implemented
+
+[33mcommit 46c32415f2d15649c6cad7d81b9e220e34c42f6b[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Sun Nov 21 06:57:26 2021 +0000
+
+    AJAX google maps implemented
+
+[33mcommit 457b34c9936db2157f7ddc67d3f940991e3f5d84[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Wed Nov 17 20:07:19 2021 +0000
+
+    Dynamic google maps done
+
+[33mcommit f1976eb38e167ac674600fbb27905d20382ee164[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Fri Nov 5 03:40:55 2021 +0000
+
+    Implemented login and registration
+
+[33mcommit 5ecb0ea4a6b1b3728d477909c8e33e2ddbc8ff02[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Sun Oct 31 02:13:41 2021 +0000
+
+    MVP done, rendering profile using database and twilio sending messages
+
+[33mcommit 8d4d79fdebbbf5d64f20f3397b2580e2f40862a8[m
+Author: Aleena <aleenataymoor@gmail.com>
+Date:   Wed Oct 27 21:47:02 2021 +0000
+
+    First commit, completed database stuff

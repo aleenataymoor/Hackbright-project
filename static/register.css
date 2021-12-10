@@ -1,0 +1,36 @@
+
+body{
+    background-image: url(catty.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    
+
+}
+
+h1{
+
+}
+#heading{
+
+    position: absolute;
+    top:4%;
+    right:10%;
+    padding: 50px 35px;
+}
+
+
+.registerform{
+    height: 500px;
+    width: 350px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 60%;
+    left: 70%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+

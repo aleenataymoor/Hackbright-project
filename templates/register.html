@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block html_head %}
+    <link rel="stylesheet" href="/static/register.css">
+{% endblock %}
+
 {% block title %} {% endblock %}
 
 {% block body %} 
@@ -10,22 +14,31 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <form action="/newuser" method="POST">
-        <label for="fname">First name and last name:</label><br>
-        <input type="text" id="fl_name" name="flname"><br>
-        <label for="email">Email:</label><br>
-        <input type="text" id="e_mail" name="email"><br>
-        <label for="phone">Phone No.:</label><br>
-        <input type="text" id="ph_no" name="phone"><br>
-        <label for="zpcode">Zipcode:</label><br>
-        <input type="text" id="zp_code" name="zpcode"><br>
-        <label for="password">Set Password:</label><br>
-        <input type="password" id="pswrd" name="password"><br>
-        <label for="password">Confirm Password:</label><br>
-        <input type="password" id="c_pswrd" name="cpassword"><br><br>
-        <input type="submit" value="SIGN UP">
-    </form>
+    <div id="heading" >
+        
+        <h2>A paw-some experience is just one step away!</h2>
 
-    <script src="/static/javascript/javascriptfile.js"></script>
+    </div>
+    <div class="registerform">
+
+        <form action="/newuser" method="POST">
+            <label for="fname">First name and last name:</label><br>
+            <input type="text" id="fl_name" name="flname"><br>
+            <label for="email">Email:</label><br>
+            <input type="text" id="e_mail" name="email"><br>
+            <label for="phone">Phone No.:</label><br>
+            <input type="text" id="ph_no" name="phone"><br>
+            <label for="zpcode">Zipcode:</label><br>
+            <input type="text" id="zp_code" name="zpcode"><br>
+            <label for="password">Set Password:</label><br>
+            <input type="password" id="pswrd" name="password"><br>
+            <label for="password">Confirm Password:</label><br>
+            <input type="password" id="c_pswrd" name="cpassword"><br><br>
+            <input type="submit" value="SIGN UP">
+        </form>
+
+    </div>
+    
+
 
 {% endblock %}
