@@ -1,6 +1,5 @@
 
-drop TABLE schedules;
-drop TABLE appointments;
+drop TABLE reminders;
 drop TABLE pets;
 drop TABLE users;
 
@@ -13,10 +12,10 @@ CREATE TABLE users (
   phone_no VARCHAR(12)
 );
 
-INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('aleena waseem', 'aleenawaseem@ymail.com', 'pet1', '94582', '5103998740');
-INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('taymoor khan', 'taymoor.response@gmail.com', 'pet12', '94586', '5108945182');
-INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('amal taymoor', 'aleenataymoor@gmail.com', 'pet123', '94536', '6503137835');
-INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('adil waseem', 'virgo_bizrate@yahoo.com', 'pet1234', '94568', '5108946595');
+INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('Aleena Waseem', 'aleenawaseem@ymail.com', 'pet1', '94582', '5103998740');
+INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('Taymoor Khan', 'taymoor.response@gmail.com', 'pet12', '94586', '5108945182');
+INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('Amal Taymoor', 'aleenataymoor@gmail.com', 'pet123', '94536', '6503137835');
+INSERT INTO users (name, email, password, zipcode, phone_no) VALUES ('Adil Waseem', 'virgo_bizrate@yahoo.com', 'pet1234', '94568', '5108946595');
 
 
 CREATE TABLE pets (
@@ -34,38 +33,14 @@ INSERT INTO pets (pet_name, species, user_id, pic_url) VALUES ('Kiwi', 'parrot',
 INSERT INTO pets (pet_name, species, user_id, pic_url) VALUES ('Chase', 'dog', 2, 'https://secure.img1-fg.wfcdn.com/im/03796479/resize-h445%5Ecompr-r85/4307/43074506/Hanging+Golden+Retriever+Puppy+Statue.jpg');
 
 
-CREATE TABLE appointments (
 
-  appointment_id SERIAL PRIMARY KEY,
-  pet_id INTEGER REFERENCES pets,
-  appointment_time_stamp timestamp,
-  appointment_type VARCHAR(15),
-  send_reminder Boolean
-);
-
-INSERT INTO appointments (pet_id) VALUES (1);
-INSERT INTO appointments (pet_id) VALUES (2);
-INSERT INTO appointments (pet_id) VALUES (3);
-INSERT INTO appointments (pet_id) VALUES (4);
-
-
-CREATE TABLE schedules (
-
-  schedule_id SERIAL PRIMARY KEY,
-  pet_id INTEGER REFERENCES pets,
-  schedule_type VARCHAR(15),
-  time_schedule timestamp
-);
-
-INSERT INTO schedules (pet_id)  VALUES (1);
-INSERT INTO schedules (pet_id) VALUES (2);
-INSERT INTO schedules (pet_id) VALUES (3);
-INSERT INTO schedules (pet_id) VALUES (4);
 
 CREATE TABLE reminders (
 
   id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users,
   name varchar(50),
+  place varchar(50),
   phone_number varchar(50),
   delta INTEGER,
   time timestamp,

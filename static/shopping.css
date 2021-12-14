@@ -1,5 +1,5 @@
 body{
-    background-color: beige;
+    background-color: lightgrey;
 }
 
 
@@ -82,4 +82,8 @@ body{
   @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
+  }
+
+  #prodlist{
+    margin-left: 70px;
   }

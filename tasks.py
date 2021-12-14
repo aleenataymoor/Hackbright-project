@@ -3,7 +3,7 @@ import crud
 from app_init import app
 from celery import Celery
 from utils.sms import *
-from model import connect_to_db, db, ScheduledReminder
+from model import connect_to_db, db, Reminder
 
 connect_to_db(app)
 

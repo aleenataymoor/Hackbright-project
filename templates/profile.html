@@ -10,56 +10,62 @@
 
     {% include "navbar.html" %}
 
-    <div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
 
-        <div class="row">
-            <div class="col-3 box picture" style="background-image: url('{{ pet.pic_url}}')" >
+    <div class="container">
+       
+            <div class="row">
+                <div class="col-3 box picture section" style="background-image: url('{{ pet.pic_url}}')" >
+                    
+                </div>
+                <div class="col-6 section">
+                    <div class="row horizontal">
+                        <div class="col-12 box section">
+                            <h3 > Pet parent:{{user.name}}</h3>
+                            <h3 > Your Pet:{{pet.pet_name}}</h3>
+                            <h3 > Pet Species:{{pet.species}}</h3>
+                        </div>
+                        <div class="col-12 box section">
+                            <form action="/createVetAppt" method="POST">
+                                <h3>Set Veterinary Appointment Reminder</h3>
+                                <label for="vet_appt">{{pet.pet_name}}'s next veterinary appointment:</label>
+                                <input id="vet_appt" type="datetime-local" name="vetdate" min="" max="2030-06-30T16:30"><br><br>
+            
+                                <label for="vet_clinic">At veterinary clinic:</label>
+                                <input id="vet_clinic" type="text" name="clinicname" ><br>
+                            
+                                <button type="submit" id='reminder-button'>Set Reminder</button>  
+                            </form>
+                        </div>
+                        <div class="col-12 section appt">
+                            <h3 > UPCOMING APPOINTMENTS:</h3>
+                            {% for appointment in appointments%}
+                                {% for key, values in appointment.items()%}
+
+                                    <ul style="list-style-type:circle;">
+                                        <li><strong>APPOINTMENT</strong></li>
+                                        <li>{{key}}</li>
+                                        <li>{{values}}</li>
+                                    </ul><br>
+                                    
+                        </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                        
+                    </div>
+                    
+                </div>
                 
             </div>
-            <div class="col-6">
-                <div class="row box horizontal">
-                    <div class="col-12">
-                        <h3 > Pet parent:{{user.name}}</h3>
-                        <h3 > Your Pet:{{pet.pet_name}}</h3>
-                        <h3 > Pet Species:{{pet.species}}</h3>
-                    </div>
-                </div>
-                <div class="row box horizontal">
-                    <div class="col-12">
-                        <h3 > Upcoming Appointments</h3>
-                        <h3 > Your Pet:{{pet.pet_name}}</h3>
-                        <h3 > Pet Species:{{pet.species}}</h3>
-                    </div>
-                </div>
-                <div class="row box horizontal">
-                    <div class="col-12">
-                        <form action="/createVetAppt" method="POST">
-                            <h3>Set Veterinary Appointment Reminder</h3>
-                            <label for="vet_appt">{{pet.pet_name}}'s next veterinary appointment:</label>
-                            <input id="vet_appt" type="datetime-local" name="vetdate" min="" max="2030-06-30T16:30"><br>
-
-                            <label for="vet_clinic">at veterinary clinic:</label>
-                            <input id="vet_clinic" type="text" name="clinicname" ><br>
-                           
-                            <button type="submit" id='reminder-button'>Set Reminder</button>  
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
         
+      
 
     </div>
-
-    
-    
-    
-
-    
-
-
-
-
 
 
 {% endblock %}

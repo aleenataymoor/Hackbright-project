@@ -24,15 +24,13 @@
           <div id="option-container">
           <div class="row">
             <div class="col-3 selection petpic" style="background-image: url('{{ pet.pic_url}}');">
-              <h3>Visit {{pet.pet_name}}'s Profile and Schedule Reminder</h3> 
                 <p><form action="/profile">
-                  <input type="submit" value="View Profile" class="center">
+                  <input type="submit" value="View Profile/Set Reminder" class="center">
                 </form><br>
               </p> 
             </div>
 
             <div class="col-3 selection vetpic">
-              <h3>Veterinary Clinics Near You</h3> 
                 <p><form action="/findvet">
                   <input type="submit" value="Find Veterinary Clinics" class="center">
                 </form><br>
@@ -40,9 +38,8 @@
                
             </div>
             <div class="col-3 selection shoppic" >
-              <h3>Shop for {{pet.pet_name}} </h3> 
                 <p><form action="/shopping" id="shoppy">
-                  <input type="submit" value="shopping" class="center">
+                  <input type="submit" value="Shop" class="center">
                 </form><br>
               </p> 
             </div>

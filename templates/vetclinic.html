@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 
+{% block html_head %}
+    <link rel="stylesheet" href="/static/veterinary.css">
+{% endblock %}
+
 {% block title %} {% endblock %}
 
 {% block body %} 
     {% include "navbar.html" %}
     <h2>VETERINARY CLINICS NEAR YOU</h2>
-        <label for="zpsrch">Looking for vets in another area? enter the zipcode here:</label>
+        <label for="zpsrch"><h4>Looking for vets in another area? enter the zipcode here:</h4></label>
         <input type="text" id="zpsrch" name="zpsrch">
         <input type="button" value="search" id="search_btn">
         <br>

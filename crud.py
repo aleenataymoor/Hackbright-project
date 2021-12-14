@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Pet, Appointment, Schedule, connect_to_db
+from model import db, User, Pet, Reminder, connect_to_db
 
 
 def create_user(name_param,email_param, password_param, zipcode_param, phone_no_param):
@@ -25,25 +25,18 @@ def create_pet(pet_name_param, species_param,user_id_param, pic_url_param):
     return pet
 
 
-def create_appointment(pet_id_param , appointment_time_stamp_param, appointment_type_param,send_reminder_param):
-    """Create and return an appointment."""
+def create_reminder( user_parm,name_param, phone_number_param,delta_param, time_param,timezone_param):
+    """Create and return a reminder."""
 
-    appointment= Appointment(pet_id=pet_id_param , appointment_time_stamp=appointment_time_stamp_param, appointment_type=appointment_type_param,send_reminder=send_reminder_param)
+    reminder= Reminder(user_id=user_parm, name=name_param, phone_number=phone_number_param,delta=delta_param, time=time_param,
+    timezone=timezone_param)
 
-    db.session.add(appointment)
+    db.session.add(reminder)
     db.session.commit()
 
-    return appointment
+    return reminder
 
-def create_schedule(pet_id_param , meal_schedule_param, medicine_schedule_param):
-    """Create and return an appointment."""
 
-    schedule= Schedule(pet_id=pet_id_param , schedule_type=schedule_type_param, time_schedule=time_schedule_param)
-
-    db.session.add(schedule)
-    db.session.commit()
-
-    return schedule
 
 
 if __name__ == '__main__':

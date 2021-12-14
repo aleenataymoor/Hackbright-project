@@ -100,16 +100,59 @@ def Index():
 @app.route('/profile')
 def show_profile(): 
     if is_logged_in():
+        appt_list=[]
         user=session['user']
         print(user)
+        
         getuser= User.query.filter_by(user_id=user).first()
         getpet= Pet.query.filter_by(user_id=user).first()
+        getappt=Reminder.query.filter_by(user_id=user).all()
+        for appt in getappt:
+            dictey={}
+            dictey[appt.name]=appt.time
+            appt_list.append(dictey)
 
-    
+         
+    print(appt_list)
+
+         
     return render_template("profile.html",
                             user=getuser,
-                            pet=getpet)
+                            pet=getpet,
+                            appointments=appt_list)
 
+
+@app.route("/createVetAppt", methods=['POST', 'GET'])
+def create_vet_appointment():
+    user=session['user']
+    print(user)
+    appt_time = request.form.get("vetdate") 
+    place=request.form.get("clinicname")
+
+    print(place)
+    appt = crud.create_reminder(
+                user,
+                place,
+                "+15103998740",
+                0,
+                appt_time,
+                "utc",
+            )
+
+    appt.time = arrow.get(appt_time).to('utc').naive
+    print(appt.time)
+    db.session.add(appt)
+    db.session.commit()
+    print(Reminder.query.filter_by(user_id=user).all())
+    print(appt)
+    send_sms_reminder.apply_async(
+        args=[appt.id], eta=appt.get_notification_time()
+    )
+
+    return redirect('/profile')
+
+
+   
 
 @app.route('/findvet', methods=['POST', 'GET'])
 def get_vet_map():
@@ -191,10 +234,6 @@ def clear_filter():
                         product_dict=product_dict,
                         type_set=type_set)
 
-    
-
-
-    
 
 
 
@@ -228,26 +267,7 @@ def add_to_cart(prod_id):
 
     return redirect("/cart")
 
-@app.route("/createVetAppt", methods=['POST', 'GET'])
-def create_vet_appointment():
-    appt_time = request.form.get("vetdate") 
-    appt = ScheduledReminder(
-                name="Vet Reminder",
-                phone_number="+15103998740",
-                delta=0,
-                time=appt_time,
-                timezone="utc",
-            )
 
-    appt.time = arrow.get(appt_time).to('utc').naive
-    print(appt.time)
-    db.session.add(appt)
-    db.session.commit()
-    send_sms_reminder.apply_async(
-        args=[appt.id], eta=appt.get_notification_time()
-    )
-
-    return redirect("/cart")
 
 @app.route("/cart")
 def show_shopping_cart():

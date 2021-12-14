@@ -20,6 +20,7 @@ class User( db.Model):
     phone_no= db.Column(db.String(12))
 
     pets= db.relationship('Pet', back_populates="users")
+    reminders= db.relationship('Reminder', back_populates="users")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} name={self.name}>"
@@ -38,68 +39,36 @@ class Pet(db.Model):
     pic_url= db.Column(db.String(255)) 
 
     users= db.relationship('User', back_populates="pets")
-    appointments= db.relationship('Appointment', back_populates="pets")
-    schedules= db.relationship('Schedule', back_populates="pets")
+    
     
     def __repr__(self):
         return f"<Pet pet_id={self.pet_id} pet_name={self.pet_name} species={self.species}>"
 
-class Appointment(db.Model):
-    """An Appointment."""
-
-    __tablename__ = "appointments"
-    appointment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'), nullable=False)
-    appointment_time_stamp = db.Column(db.DateTime, nullable= False)
-    appointment_type= db.Column(db.String(15))
-    send_reminder= db.Column(db.Boolean)
-
-    pets= db.relationship('Pet', back_populates="appointments")
-
-    def __repr__(self):
-        return f"<Appointment appointment_id={self.appointment_id} appointment_type={self.appointment_type}>"
-        #Can i use foreign key pet_id here with self?
 
 
-class Schedule(db.Model): 
-    """Pet Schedule"""
 
-    __tablename__ = "schedules"
-    schedule_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    pet_id = db.Column(db.Integer, db.ForeignKey('pets.pet_id'), nullable=False)
-    schedule_type= db.Column(db.String(15))
-    time_schedule= db.Column(db.DateTime)
 
-    pets= db.relationship('Pet', back_populates="schedules")
-
-    def __repr__(self):
-        return f"<Schedule schedule_id={self.schedule_id} meal_schedule={self.meal_schedule} medicine_schedule={self.medicine_schedule}>"
-
-class ScheduledReminder(db.Model):
+class Reminder(db.Model):
     __tablename__ = 'reminders'
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     name = db.Column(db.String(50), nullable=False)
     phone_number = db.Column(db.String(50), nullable=False)
     delta = db.Column(db.Integer, nullable=False)
     time = db.Column(db.DateTime, nullable=False)
     timezone = db.Column(db.String(50), nullable=False)
 
+    users= db.relationship('User', back_populates="reminders")
+
     def __repr__(self):
-        return '<Reminder %r>' % self.name
+        return f"<Reminder name={self.name}>" 
 
     def get_notification_time(self):
         appointment_time = arrow.get(self.time)
         reminder_time = appointment_time.shift(minutes=-self.delta)
         return reminder_time
 
-
-# class Shopping(db.Model):
-#     """A Shop."""
-
-#     __tablename__ = "shoppings"
-#     product_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    
 
 
 

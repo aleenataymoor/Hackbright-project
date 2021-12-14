@@ -2,6 +2,18 @@ body{
     font-family: Helvetica, sans-serif;
 }
 
+
+.navbar {
+    background: #0C120C ;
+    color: #333;
+    }
+
+.nav a {
+    color: #fff;
+    }
+
+
+
 h1{
     font-weight: 600;
 }
@@ -49,10 +61,13 @@ h1{
 
 .navbar a{
     padding:0.5em;
-    color: white;
     display: inline-block;
     text-decoration: none ;
 }
+
+
+   
+
 
 
 	

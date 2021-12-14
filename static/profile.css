@@ -1,7 +1,12 @@
 body{
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKrQ0avSFX3t6BFy7Kp3JO2GWGgJv7UO-9ng&usqp=CAU);
+    background-size: 100%;
 }
 
-
+section{
+    height:400px;
+    width:700px
+}
 
 .box{
     margin-top: 100px;
@@ -16,5 +21,11 @@ body{
 }
 
 .picture{
-    background-size: cover;
+    background-size:100% 100%;
+    width:400px;
+    height: 400px;
+}
+
+.appt{
+    margin-top: 100px;
 }
