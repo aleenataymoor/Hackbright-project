@@ -16,3 +16,24 @@ Python, Jinja, Flask, Javascript, AJAX, PostgreSQL, HTML, CSS, Bootstrap, Google
 ## Demo
 https://www.youtube.com/watch?v=FnC6oCMLDyI
 
+## How to run "Petootie" locally:
+
+Download the files
+
+Create virtual environment inside of the /api folder
+
+Then create virtual environment by using command: env/bin/activate
+
+Run pip3 install -r requirements.txt
+
+In the main folder, run npm install
+
+source database by 1) run command: dropdb projectdb 2) run command: createdb projectdb 3) run command: psql projectdb < database.sql
+
+Create a secrets.sh folder to host API key for Google Maps
+
+Run source secrets.sh
+
+Open three terminals - in one run command: redis-server , in second terminal run command: celery -A tasks.celery worker -l info   , and in the third terminal run: python3 server.py
+
+On local host, register and login to experience all the services that petootie provides
